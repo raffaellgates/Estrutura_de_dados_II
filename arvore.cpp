@@ -1,62 +1,9 @@
 #include <iostream>
+#include <bits/stdc++.h> 
+#include <queue>
+
 
 using namespace std;
-template<class Type>
-class Stack{
-private:
-	Type* vector;
-	int max;
-	int top;
-public:
-	Stack(int size){
-		vector = new Type[size];
-		max = size - 1;
-		top = -1;
-	}
-
-	Stack(){
-		delete[] vector;
-	}
-
-	void stackUp(Type element){
-		if (top < max){
-			vector[++top] = element;
-		} else {
-			cout << "Full stack" << endl;
-		}
-	} 
-
-	void unstack(){
-		if (top != -1){
-			top--;
-		} else {
-			cout << "Empty stack" << endl;
-		}
-	}
-
-	bool emptyStack(){
-		bool empty = false;
-
-		if (top == -1){
-			empty = true;
-		}
-
-		return empty;
-	}
-
-	Type getTop(){
-		return vector[top];
-	}
-
-	void checkTop(){
-		if (emptyStack()){
-			cout << "Empty Stack" << endl;
-		} else {
-			cout << vector[top] << endl;
-		}
-	}
-};
-
 
 template <class T>
 class No {
@@ -167,20 +114,21 @@ class Arvore {
             }
         }
 
-        void preOrderWithStack(){
-            Stack<No<T>*> stack(sizeof(Arvore));
-            No<T> *r = root;
-            if (r!=NULL){
-                stack.stackUp(r);
-                while (!stack.emptyStack()){
-                    r = stack.getTop();
-                    cout << stack.getTop()->el << endl;
-                    stack.unstack();
-                    if (r->right != 0){
-                        stack.stackUp(r->right);
-                    } 
-                    if (r->left != 0){
-                        stack.stackUp(r->left);
+        void preOrderWithStack() {
+            stack<No<T>*> stack;
+            No<T> *temp = root;
+            
+            if (temp != 0) {
+                stack.push(temp);
+                while (!stack.empty()) {
+                    temp = stack.top();
+                    cout << stack.top()->el << " ";
+                    stack.pop();
+                    if (temp->right != 0) {
+                        stack.push(temp->right);
+                    }
+                    if (temp->left != 0) {
+                        stack.push(temp->left);
                     }
                 }
             }
@@ -201,8 +149,8 @@ int main(){
     No<int> *x= new No<int>(6);
     arv->insert(1);
     arv->insertWihtIserc(x, arv->getRoot());
-	arv->preOrderRecursion(a);
-    // arv->preOrderWithStack();
+	// arv->preOrderRecursion(a);
+    arv->preOrderWithStack();
     // arv->inOrderRecursion(a);
     // arv->postOrderRecursion(a);
 };
