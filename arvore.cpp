@@ -116,26 +116,88 @@ class Arvore {
 
         void preOrderWithStack() {
             stack<No<T>*> stack;
-            No<T> *temp = root;
+            No<T> *prev = root;
             
-            if (temp != 0) {
-                stack.push(temp);
+            if (prev != 0) {
+                stack.push(prev);
                 while (!stack.empty()) {
-                    temp = stack.top();
+                    prev = stack.top();
                     cout << stack.top()->el << " ";
                     stack.pop();
-                    if (temp->right != 0) {
-                        stack.push(temp->right);
+                    if (prev->right != 0) {
+                        stack.push(prev->right);
                     }
-                    if (temp->left != 0) {
-                        stack.push(temp->left);
+                    if (prev->left != 0) {
+                        stack.push(prev->left);
                     }
                 }
             }
         }
 
+        void inOrderWithStack() {
+            stack<No<T>*> stack;
+            No<T> *prev = root;
 
-    };
+            while (prev != 0 || stack.empty() == false) { 
+
+                while (prev !=  0) { 
+                    stack.push(prev); 
+                    prev = prev->left; 
+                } 
+        
+                prev = stack.top(); 
+                stack.pop(); 
+        
+                cout << prev->el << " "; 
+        
+                prev = prev->right; 
+            }
+        }
+
+        void postOrderWithStack() {
+            stack<No<T>*> stack;
+            No<T> *prev = root;
+
+            while (prev != 0 || stack.empty() == false) { 
+
+                if(prev !=  0) { 
+                    stack.push(prev); 
+                    prev = prev->left; 
+                } 
+        
+                else{
+                    if(stack.empty() == true){
+                        break;
+                        }
+                    else{
+                        if(stack.top()->right == 0){
+                            prev = stack.top();
+                            stack.pop();
+                            cout << prev->el << " ";
+                            while(prev == stack.top()->right){
+                                cout << stack.top()->el << " ";
+                                prev = stack.top();
+                                stack.pop();
+                                if (stack.empty()){
+                                    break;
+                                }
+                            }
+                        }
+                        if (stack.empty() == false){
+                            prev = stack.top()->right;
+                        }
+                        else{
+                            prev = 0;
+                        }
+                    }
+
+                }
+                  
+            }
+        }
+
+
+};
 int main(){
     No<int> *d= new No<int>(2);
     No<int> *f= new No<int>(12);
@@ -147,10 +209,11 @@ int main(){
 	No<int> *a= new No<int>(13,b,c);
 	Arvore<int> *arv = new Arvore<int>(a);
     No<int> *x= new No<int>(6);
-    arv->insert(1);
-    arv->insertWihtIserc(x, arv->getRoot());
+    // arv->insert(1);
+    // arv->insertWihtIserc(x, arv->getRoot());
 	// arv->preOrderRecursion(a);
-    arv->preOrderWithStack();
+    // arv->preOrderWithStack();
     // arv->inOrderRecursion(a);
     // arv->postOrderRecursion(a);
+    arv->postOrderWithStack();
 };
