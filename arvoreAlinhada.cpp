@@ -61,14 +61,12 @@ class Arvore {
         }
 
         if (prev->el > el){
-            cout << "okay1";
             prev->left=newNode;
             newNode->sucessor = 1;
             newNode->right = prev;
         }
 
         else if (prev->sucessor == 1){
-            cout << "okay2";
             newNode->sucessor=1;
             prev->sucessor=0;
             newNode->right=prev->right;
@@ -77,16 +75,15 @@ class Arvore {
 
         else{
             prev->right = newNode;
-            cout << "okay3";
         }
     }
 
-    void preOrder(No<T> *root){    //N funciona
+    void preOrder(No<T> *root){
     No<T> *p = root;
 
     while(p!=0)
     {
-        printf("%d ",p->el);
+        cout << p->el << " ";
 
         if(p->left!=0)
             p=p->left;
@@ -113,6 +110,7 @@ int main(){
 	Arvore<int> *arv = new Arvore<int>(a);
     arv->insert(15);
     arv->insert(80);
+    arv->insert(9);
     arv->insert(11);
     arv->insert(100);
 	arv->preOrder(arv->getRoot());
