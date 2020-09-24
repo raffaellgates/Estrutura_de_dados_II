@@ -91,15 +91,16 @@ class Arvore {
         if(p->left!=0)
             p=p->left;
 
-        else if(p->sucessor==1)
+        else if(p->sucessor==0)
             p=p->right;
 
         else
         {
-            while(p->right!=0 && p->sucessor==0)
+            while(p->right!=0 && p->sucessor==1)
                 p=p->right;
 
-            if(p->right == 0)                          
+            if(p->right == 0)
+            break;                          
             else
                 p=p->right;
 
