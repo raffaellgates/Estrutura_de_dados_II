@@ -132,6 +132,7 @@ class Arvore {
                     }
                 }
             }
+            cout<<"\n";
         }
 
         void inOrderWithStack() {
@@ -196,8 +197,122 @@ class Arvore {
             }
         }
 
+    void RemoverFusao(No <T> *node)
+    {
+        No<T> *temp = node;
+        if (node != 0){
+            if (!node->right)
+                node = node->left;
+
+            else if (node->left == 0)
+                node = node->right;
+            else{
+                temp = node->left;
+                while (temp->right != 0){
+                    temp = temp->right;
+                }
+                temp->right = node->right;
+                temp = node;
+                node = node->left;
+            }
+            cout << temp->el << "deletado\n";
+            delete temp;
+        }
+    }
+
+    void Procurar(T el){
+        No<T> *node = root;
+        No<T> *prev = 0;
+        while (node!=0){
+            if (node->el == el){
+                break;
+            }
+            prev = node;
+            if(el < node ->el){
+                node = node->left;
+            }
+            else node = node->right;
+        }
+        if (node != 0 && node->el==el){
+            if(node==root){
+                RemoverFusao(root);
+            }
+            else
+            {
+                if(prev->left==node){
+                    RemoverFusao(prev->left);
+                }
+                else
+                    RemoverFusao(prev->right);
+            }
+        }
+        else if (root!=0){
+                    cout<<"elemento "<<el<< "nao esta na arvore\n";
+                }
+                else cout<<"a arvore esta vazia\n";
+            }
+            
+
+    void ProcurarCopia(T el){
+        No<T> *node = root;
+        No<T> *prev = 0;
+        while (node!=0){
+            if (node->el == el){
+                break;
+            }
+            prev = node;
+            if(el < node ->el){
+                node = node->left;
+            }
+            else node = node->right;
+        }
+        if (node != 0 && node->el==el){
+            if(node==root){
+                RemoverCopia(root);
+            }
+            else
+            {
+                if(prev->left==node){
+                    RemoverCopia(prev->left);
+                }
+                else
+                    RemoverCopia(prev->right);
+            }
+        }
+        else if (root!=0){
+                    cout<<"elemento "<<el<< "nao esta na arvore\n";
+                }
+                else cout<<"a arvore esta vazia\n";
+            }
+
+    void RemoverCopia(No<T> *node){
+        No<T> *previous, *tmp = node;
+        if (node->right == 0){
+            node = node->left;
+        }
+        else if (node->left == 0){
+            node = node->right;
+        }
+        else{
+            tmp = node->left; 
+            previous = node;
+            while (tmp->right != 0){
+                previous = tmp;
+                tmp = tmp->right;
+            }
+            node->el = tmp->el;
+            if (previous == node){
+                previous->left = tmp->left;
+            }
+            else{
+                previous->right = tmp->left;
+                }
+        }
+        delete tmp;
+    }
 
 };
+
 int main(){
     No<int> *d= new No<int>(2);
     No<int> *f= new No<int>(12);
@@ -215,5 +330,10 @@ int main(){
     // arv->preOrderWithStack();
     // arv->inOrderRecursion(a);
     // arv->postOrderRecursion(a);
-    arv->postOrderWithStack();
+    arv->preOrderWithStack();
+    arv->Procurar(20);
+    arv->preOrderWithStack();
+    arv->ProcurarCopia(31);
+    arv->preOrderWithStack();
+
 };
